@@ -11,6 +11,26 @@ Keep it simple. No IDE plugins, no lock‑in. These tiny scripts package the **r
 
 ---
 
+## 🚀 The Blueprint Method (Advanced Workflow)
+
+If you are implementing large features, asking an AI to design architecture and write code at the same time can lead to hallucinations and context drift. For complex tasks, we recommend **The Blueprint Method**: a three-phase methodology that shifts AI from a guessing machine to a precise execution engine.
+
+**The Ground Truth Principle:** Treat your codebase as the absolute source of truth. Design docs are historic intent. If they clash, the code wins.
+
+### Phase 1: Align (Requirement Gate)
+Feed the AI your requirements and ask it to audit them for edge cases before any code is written.
+* **Prompt to use:** *"Audit this requirement document for clarity, missing edge cases, and logical gaps. Rewrite it into strict Given-When-Then acceptance criteria and wait for my approval before writing code."*
+
+### Phase 2: Design (Architecture Gate)
+Have the AI map out *how* the requirements integrate into the codebase by updating your markdown design docs or Mermaid diagrams first.
+* **Prompt to use:** *"Based on the approved requirements and the attached codebase context, update our architecture markdown files. Then, generate a strict step-by-step `coding_prompt.md` for execution. Wait for my approval."*
+
+### Phase 3: Execute (Verification Gate)
+Feed the AI the generated `coding_prompt.md` and force it to code incrementally.
+* **Prompt to use:** *"Execute step 1 of the coding prompt. Write complete, production-ready code with no placeholders. Stop and wait for me to verify the tests pass before moving to step 2."*
+
+---
+
 ## Quick Start
 ```bash
 python3 -m venv venv && source venv/bin/activate
@@ -18,7 +38,7 @@ python3 -m venv venv && source venv/bin/activate
 ```
 1) Run a tool below to generate a **single text file**.
 2) Attach or paste that file into your coding chat.
-3) Prompt the AI with what you want (review, refactor, tests, bug fix).
+3) Prompt the AI with what you want (review, refactor, tests, bug fix, or a Blueprint Method phase).
 
 > Tip: Remove secrets before packaging; add the output filename to `.gitignore`.
 
@@ -99,6 +119,14 @@ python3 analyze_folder.py path/to/dir  # analyze a specific directory
 2. Attach; ask: “Explain risk, edge cases, and missing tests in this change.”
 
 ---
+
+D) The Blueprint Method (New Feature)
+
+concatenate_text_files.py ./myapp --code-only → myapp_code.txt
+
+Attach myapp_code.txt along with your requirement_prompt.md.
+
+Follow the Phase 1, 2, and 3 prompts outlined in the Blueprint section above to design and execute without context drift.
 
 ## Best Practices
 - **Keep bundles small:** exclude vendor/large assets; your chat will run faster and be more accurate.
