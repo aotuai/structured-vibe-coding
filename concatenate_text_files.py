@@ -8,11 +8,11 @@ from shared_utils import summary, write_concatenated_artifact
 
 # --- Configuration ---
 ALLOWED_EXTENSIONS = {
-    '.py', '.tsx', '.css', '.js', '.conf', '.json',
+    '.py', '.tsx', '.css', '.js', '.conf', '.json', '.vue',
     '.html', '.yml', '.yaml', '.txt', '.sh', '.md', '.ini', '.ts'
 }
 CODE_EXTENSIONS = {
-    '.py', '.tsx', '.js', '.ts', '.html', '.css', '.sh',
+    '.py', '.tsx', '.js', '.ts', '.html', '.css', '.sh', '.vue',
 }
 PYTHON_EXTENSIONS = {'.py'}
 ALLOWED_FILENAMES = {'dockerfile'}
