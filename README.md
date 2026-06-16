@@ -1,8 +1,18 @@
 **Repository:** https://github.com/aotuai/Structured_Vibe_Coding  
-**License:** BSD. Use at your own risk; PRs welcome. Keep changes tiny, logs clear, and defaults sensible.
+**License:** BSD. Use the Structured Vibe Coding CLI tools at your own risk; PRs welcome. Keep changes tiny, logs clear, and defaults sensible.
+
+![Claude, Gemini, ChatGPT, Codex, Cursor](svc.png)
 
 Author's experience:
-> Using this methodology, We have generated 99% of production code with a combination of Claude, Gemini, and GPT — across both small features and large complex tasks — over the past 1.5 years, on a monthly subscription budget of $20–$60. Most of our engineer's background: decades in C/C++, Linux OS, Git, Python, and Algorithms.
+> Want to leverage frontier models like Claude Fable 5 without skyrocketing your AI bill?
+>
+> Using our open-source **Structured Vibe Coding CLI tool and methodology**, we generated 90% of the production code for BrainFrame and VisionCapsules using Claude, Gemini, and ChatGPT.
+>
+> Over the past 1.5 years, we’ve tackled everything from quick fixes to massive architectural tasks—all on a lean monthly budget of **$20–$200**.
+>
+> We achieved this without relying on Codex, Cursor, or heavy autonomous agents. It’s designed for veteran software and algorithm engineers with deep experience in Python, web development, C/C++, Linux, and Git who want tight control over their LLMs and budget.
+>
+> Open sourced here: https://github.com/aotuai/Structured_Vibe_Coding
 
 - [1. Philosophy: Structured Vibe Coding](#1-philosophy-structured-vibe-coding)
   - [1.1. Who is this for?](#11-who-is-this-for)
@@ -35,24 +45,22 @@ Fundamentally, Agentic IDEs (like Cursor or Copilot) introduce a middleman into 
 
 Structured Vibe Coding explicitly rejects the black box. It operates on two core pillars:
 
-* **Deterministic Tooling**: Scripts that allow humans to share exact context with the AI, and for the AI to return complete files back to the human. So the interaction with AI is transparent to the user.
+* **Vobe Coding Tooling**: Scripts that allow humans to share exact context with the AI, and for the AI to return complete files back to the human. So the interaction with AI is transparent to the user.
   * **Concatenate scripts:** Package source code, git history, requirements and design documents for dropping into a chat interface
-  * **Code retrieval tools:** Retrieve output and dropping back to the repository
+  * **Code retrieval tools:** Retrieve output and dropping back to the repository (To be developed, **PRs welcome**)
 * **Structured Blueprint Workflows**: A clear, phase-based framework that forces the AI to collaborate exactly how a junior and senior software engineer would interact:
   * **Requirements Clarification** 
   * **Design Constraint Confirmation** 
   * **Code & Test Verification**
 
-| Feature | Structured Vibe Coding  | Agentic IDEs (Cursor/Copilot) | Autonomous Agents (Devin) |
-| :--- | :--- | :--- | :--- |
-| **Target User** | **Production Engineering.** CLI-comfortable devs and budget-conscious teams. | **Speed-Focused Devs.** Individuals rapidly prototyping. Output often requires a separate engineering pass for production. | **Task Delegators.** Teams wanting hands-off, "fire-and-forget" issue resolution. |
-| **Context Control** | **Absolute.** You build the exact text file. | **Low.** The IDE guesses what matters via RAG. | **Variable.** The agent navigates the repo itself. |
-| **Transparency** | **High.** Prompts are version-controlled docs. | **Zero.** Hidden system prompts and hidden RAG. | **Moderate.** You can view the agent's thought logs. |
-| **Code Application** | **Atomic.** Whole-file generation downloaded directly. | **Injected.** Heuristic-based inline streaming. | **Asynchronous.** Direct git commits and branch creation. |
-| **Diff & Verification** | **Strict.** Deterministic visual diffs via `meld`. | **Ephemeral.** Custom UI diffs that vanish once accepted. | **Standard PR.** Reviewed asynchronously via GitHub/GitLab. |
-| **Merge Safety** | **High.** Human has pixel-perfect control over hunks. | **Variable.** "Apply" buttons often botch boilerplate and indentation. | **Moderate.** Depends entirely on the agent's test-running ability. |
-| **Iteration Speed** | High Overall. Slower micro-edits due to manual diff checks, but reaches production faster by avoiding rework. | Medium Overall. Frictionless for micro-edits, but automated drafting often leads to context loss and rework. | Slowest. High latency as agents navigate and execute tasks. || **Cost** | **Predictable.** Flat-rate chat subscriptions. | **Moderate.** Monthly IDE subscription tiers. | **High.** Token-heavy, often metered per task. |
-| **Vendor Lock-in** | **None.** Works with Claude, GPT, local models. | **High.** Tied to their specific interface/servers. | **High.** Tied to the specific platform. |
+| Feature | Structured Vibe Coding  | Agentic IDEs (Cursor/Copilot) |
+| :--- | :--- | :--- |
+| **Target User** | **Production Engineering.** CLI-comfortable devs and budget-conscious teams. | **Speed-Focused Devs.** Individuals rapidly prototyping. Output often requires a separate engineering pass for production. |
+| **Context Control** | **Absolute.** You build the exact text file using the CLI tools. | **Low.** The IDE guesses what matters via RAG. |
+| **Transparency** | **High.** Prompts are version-controlled docs. | **Low.** Hidden system prompts and hidden RAG. |
+| **Iteration Speed** | **High Overall**. Reaches production faster by giving human developer context controls to avoid rework. | **Medium Overall**. Frictionless for micro-edits, but automated drafting often leads to context loss and rework. |
+| **Cost** | **Predictable.** Fully control by human developer. | **Non Predictable.** Often exceed Monthly IDE subscription tiers. |
+| **Vendor Lock-in** | **None.** Works with Claude, GPT, local models. | **High.** Tied to their specific interface/servers. |
 
 For small features, you don't need the Structured Blueprint Method — jump straight to [Vibe Coding Tools](#3-vibe-coding-tools). This toolkit is for software engineers comfortable with the command line.
 
