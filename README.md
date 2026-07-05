@@ -23,7 +23,8 @@ Author's experience:
   - [2.3. Co-Design with AI](#23-co-design-with-ai)
     - [2.3.1. Generate coding\_prompt.md for AI, update DESIGN.md for human](#231-generate-coding_promptmd-for-ai-update-designmd-for-human)
   - [2.4. Code and Test with Human Verification](#24-code-and-test-with-human-verification)
-    - [2.4.1. Code by AI and Tests by human](#241-code-by-ai-and-tests-by-human)
+    - [2.4.1. Code by AI](#241-code-by-ai)
+    - [Tests by human](#tests-by-human)
 - [3. Vibe Coding Tools](#3-vibe-coding-tools)
   - [3.1. Quick Start](#31-quick-start)
   - [3.2. `concatenate_text_files.py`](#32-concatenate_text_filespy)
@@ -115,37 +116,59 @@ This will generate a file my_app_concat.txt
 
 3. Drop the my_app_concat.txt in AI chat window along with the following prompt,
 
-> Audit `design_docs/change_request_prompt.md` for clarity, missing edge cases, and logical gaps. Rewrite it into strict Given-When-Then acceptance criteria, divided into small steps that build incrementally and can each be verified before the next. And propose updates to `design_docs/change_request_prompt.md` reflecting the new scope. Wait for my approval before writing any code. Do not include details already implemented in the codebase.
-> 
-> The Ground Truth Principle: Treat the codebase as the absolute source of truth. Markdown design files are historic intent. If they clash, the code wins.
+> Audit the feature requests change_request_prompt.md. Stop and ask for clarification if you find any logical gaps, unhandled edge cases, contradictions, or missing data dependencies.
 >
+> The Ground Truth Principle: Treat the codebase as the absolute source of truth. Markdown design files are historic intent. If they clash, the code wins.
+> If there are no pending clarifications, update `change_request_prompt.md` incorporating the following instructions:
+> 
+> - Incremental Scoping: Break the feature down into sub-features that build upon each other. Each sub-feature must be user-verifiable without depending on the next. Do not include details already implemented in the codebase.
+> - Acceptance Criteria: Define the feature requests using strict Given-When-Then format. Use strictly user-verifiable language—do not use underlying codebase or architectural terminology.
+>
+> Wait for my approval on the change_request_prompt.md and answers to any clarifications before writing any code or architecture design.
+
+Note that the initial version of change_request_prompt.md can be drafted in any format by the user.
 
 ## 2.3. Co-Design with AI
 
-Have the AI map out *how* the change request integrates into the codebase by updating your design docs (`DESIGN.md` or any Mermaid diagrams).
+Have the AI map out *how* the change request integrates into the codebase by updating your design docs (`DESIGN.md` or any Mermaid diagrams). You may skip this step for small features.
 
 ### 2.3.1. Generate coding_prompt.md for AI, update DESIGN.md for human
 
-> Based on the approved `design_docs/change_request_prompt.md` and the codebase context, update design documents in `design_docs/`. Wait for my approval. Then generate a strict step-by-step `coding_prompt.md` for execution. Wait for my approval. Do not include in `coding_prompt.md` any details already implemented in the codebase.
+> Based on the `design_docs/change_request_prompt.md` and the codebase context, generate or update design documents in `design_docs/` for human read. and generate a strict step-by-step `coding_prompt.md` for AI execution. Do not include in `coding_prompt.md` any details already implemented in the codebase. Wait for my approval.
 >
 > The Ground Truth Principle: Treat your codebase as the absolute source of truth. Design docs are historic intent. If they clash, the code wins.
 >
-> When updating the design documents, edit only what this change affects. Capture architecture changes, user-facing impacts, API changes, and external constraints — not low-level implementation details, which live in the code.
+> When updating the design documents, edit only what this change affects. Capture architecture changes, API changes, and external constraints — not low-level implementation details, which live in the code.
 >
-> I will provide the architecture diagrams as .drawio.svg files for you to update. Preserve the embedded draw.io XML so the diagrams stay editable.
+> The architecture diagrams as .drawio.svg files for you to update. Preserve the embedded draw.io XML so the diagrams stay editable by human when needed.
+> If there are user-facing impacts, which affects change_request_prompt.md, ask for my confirmation.
 
 ## 2.4. Code and Test with Human Verification
 
 Feed the AI the generated `coding_prompt.md` and force it to code incrementally.
 
-### 2.4.1. Code by AI and Tests by human
+### 2.4.1. Code by AI
 
-> Execute prompt 1: `...` of the coding_prompt.md. Write complete, production-ready code with no placeholders. Stop and wait for me to verify the tests pass before moving to the next prompt.
+> Execute step `...` of the prompt. Write complete, production-ready code with no placeholders. Stop and wait for me to verify the tests pass before moving to the next step.
 >
 > Coding Constraints:
-> - Generate the whole file: Always output the complete file content so I can download and replace my local copy directly. Please provide the full file path and directory above the code block. Do not change the file name; it must exactly match the original.
+> - Generate the whole file: Always output the complete file content in zip file so I can download, unzip and replace my local copy directly.
 > - Minimal changes only: Do the absolute minimum required to accomplish the task. Do not expand the scope. If you feel a broader architectural change is necessary, ask for my approval first.
-> - Zero cosmetic changes: I manually review every line using meld via gitk diffs. Do not reformat existing code, change indentation, merge/split lines, or modify/add/remove comments. Leave the surrounding code exactly as you found it to keep the diff clean.
+> - Zero cosmetic changes: I manually review every line using diff tools. Do not reformat existing code, change indentation, merge/split lines, or modify/add/remove comments. Leave the surrounding code exactly as you found it to keep the diff clean.
+>
+> Please provide commit text along with your results.
+
+### Tests by human
+
+> Here is the test results.
+>
+> - Crashing? Yes/No
+> - Inputted:
+> - Outputted:
+> - Expected output:
+> - The output is incorrect? Yes/No
+> 
+> Please review the logic. Add logging if you need me to trace the execution steps.
 
 ---
 
