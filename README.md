@@ -19,12 +19,12 @@ Author's experience:
 - [2. The Structured Blueprint Method](#2-the-structured-blueprint-method)
   - [2.1. Prerequisites](#21-prerequisites)
   - [2.2. Align Requirements Between AI and Human](#22-align-requirements-between-ai-and-human)
-    - [2.2.1. Reflect the scope with change\_request\_prompt.md](#221-reflect-the-scope-with-change_request_promptmd)
+    - [2.2.1. Prompt: Reflect the scope with change\_request\_prompt.md](#221-prompt-reflect-the-scope-with-change_request_promptmd)
   - [2.3. Co-Design with AI](#23-co-design-with-ai)
-    - [2.3.1. Generate coding\_prompt.md for AI, update DESIGN.md for human](#231-generate-coding_promptmd-for-ai-update-designmd-for-human)
+    - [2.3.1. Prompt: Generate coding\_prompt.md for AI, update DESIGN.md for human](#231-prompt-generate-coding_promptmd-for-ai-update-designmd-for-human)
   - [2.4. Code and Test with Human Verification](#24-code-and-test-with-human-verification)
-    - [2.4.1. Code by AI](#241-code-by-ai)
-    - [Tests by human](#tests-by-human)
+    - [2.4.1. Prompt: Code by AI](#241-prompt-code-by-ai)
+    - [2.4.2. Prompt: Test with Human Verification](#242-prompt-test-with-human-verification)
 - [3. Vibe Coding Tools](#3-vibe-coding-tools)
   - [3.1. Quick Start](#31-quick-start)
   - [3.2. `concatenate_text_files.py`](#32-concatenate_text_filespy)
@@ -103,7 +103,7 @@ VS Code, with a few extensions, gives you a Word/Google Docs-like editing experi
 
 Feed the AI your change request and ask it to audit for edge cases before any code is written.
 
-### 2.2.1. Reflect the scope with change_request_prompt.md
+### 2.2.1. Prompt: Reflect the scope with change_request_prompt.md
 
 1. Place change_request_prompt.md in the my_app/design_docs/ folder along with design documents, e.g., DESIGN.md.
 
@@ -132,9 +132,9 @@ Note that the initial version of change_request_prompt.md can be drafted in any 
 
 Have the AI map out *how* the change request integrates into the codebase by updating your design docs (`DESIGN.md` or any Mermaid diagrams). You may skip this step for small features.
 
-### 2.3.1. Generate coding_prompt.md for AI, update DESIGN.md for human
+### 2.3.1. Prompt: Generate coding_prompt.md for AI, update DESIGN.md for human
 
-> Based on the `design_docs/change_request_prompt.md` and the codebase context, generate or update design documents in `design_docs/` for human read. and generate a strict step-by-step `coding_prompt.md` for AI execution. Do not include in `coding_prompt.md` any details already implemented in the codebase. Wait for my approval.
+> Based on the `change_request_prompt.md` and the codebase context, generate or update design documents in `design_docs/` for human read. and generate a strict step-by-step `coding_prompt.md` for AI execution. Do not include in `coding_prompt.md` any details already implemented in the codebase. Wait for my approval.
 >
 > The Ground Truth Principle: Treat your codebase as the absolute source of truth. Design docs are historic intent. If they clash, the code wins.
 >
@@ -147,7 +147,7 @@ Have the AI map out *how* the change request integrates into the codebase by upd
 
 Feed the AI the generated `coding_prompt.md` and force it to code incrementally.
 
-### 2.4.1. Code by AI
+### 2.4.1. Prompt: Code by AI
 
 > Execute step `...` of the prompt. Write complete, production-ready code with no placeholders. Stop and wait for me to verify the tests pass before moving to the next step.
 >
@@ -158,15 +158,16 @@ Feed the AI the generated `coding_prompt.md` and force it to code incrementally.
 >
 > Please provide commit text along with your results.
 
-### Tests by human
+### 2.4.2. Prompt: Test with Human Verification
 
 > Here is the test results.
 >
 > - Crashing? Yes/No
 > - Inputted:
-> - Outputted:
-> - Expected output:
 > - The output is incorrect? Yes/No
+> - Outputted:
+> - Logs attached:
+> - Expected output:
 > 
 > Please review the logic. Add logging if you need me to trace the execution steps.
 
