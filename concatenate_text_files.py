@@ -22,6 +22,21 @@ EXCLUDED_DIRS = {
     '.vscode', '__pycache__', '.idea', '.venv'
 }
 
+def is_excluded(path: Path, name_exclusions: set[str], path_exclusions: set[Path], raw_exclusions: list[str]) -> bool:
+    if path.name in name_exclusions:
+        return True
+    if path.resolve() in path_exclusions:
+        return True
+    path_str = f"/{path.resolve().as_posix()}/"
+    for exc in raw_exclusions:
+        exc_clean = exc.replace('\\', '/')
+        while exc_clean.startswith('./'):
+            exc_clean = exc_clean[2:]
+        exc_clean = exc_clean.strip('/')
+        if exc_clean and f"/{exc_clean}/" in path_str:
+            return True
+    return False
+
 def get_display_path(file_path: Path, base_dir: Optional[Path]) -> Path:
     """Returns a relative path if possible, otherwise the absolute path."""
     try:
@@ -39,7 +54,8 @@ def find_files_to_process(
     recursive: bool, 
     max_size: Optional[int],
     name_exclusions: set[str],
-    path_exclusions: set[Path]
+    path_exclusions: set[Path],
+    raw_exclusions: list[str]
 ) -> list[tuple[Path, int, Path]]:
     """
     Finds all files in the directory that match the allowlist and are not in the blocklists.
@@ -68,19 +84,22 @@ def find_files_to_process(
         if not recursive:
             dirs[:] = []  # Prevent os.walk from descending into subdirectories
         else:
-            dirs[:] = [
-                d for d in dirs 
-                if d.lower() not in EXCLUDED_DIRS 
-                and d not in name_exclusions
-                and (current_root / d).resolve() not in path_exclusions
-            ]
+            new_dirs = []
+            for d in dirs:
+                if d.lower() in EXCLUDED_DIRS:
+                    continue
+                d_path = Path(root) / d
+                if is_excluded(d_path, name_exclusions, path_exclusions, raw_exclusions):
+                    continue
+                new_dirs.append(d)
+            dirs[:] = new_dirs
         
         for filename in files:
-            if filename.lower() in EXCLUDED_FILENAMES or filename in name_exclusions:
+            if filename.lower() in EXCLUDED_FILENAMES:
                 continue
             
             file_path = Path(root) / filename
-            if file_path.resolve() in path_exclusions:
+            if is_excluded(file_path, name_exclusions, path_exclusions, raw_exclusions):
                 continue
             if file_path.name.lower() in ALLOWED_FILENAMES or file_path.suffix.lower() in extensions_to_check:
                 try:
@@ -120,6 +139,7 @@ def main():
     
     name_exclusions = set(args.no)
     path_exclusions = {Path(p).resolve() for p in args.no}
+    raw_exclusions = args.no
     
     found_files = []
 
@@ -127,7 +147,7 @@ def main():
     for input_str in args.inputs:
         input_path = Path(input_str).resolve()
         
-        if input_path.name in name_exclusions or input_path in path_exclusions:
+        if is_excluded(input_path, name_exclusions, path_exclusions, raw_exclusions):
             print(f"⚠️ Skipping explicitly provided input '{input_str}' as it is in the exclusion list.")
             continue
         
@@ -152,7 +172,8 @@ def main():
                     args.recursive, 
                     args.max,
                     name_exclusions,
-                    path_exclusions
+                    path_exclusions,
+                    raw_exclusions
                 )
             )
 
