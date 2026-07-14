@@ -6,11 +6,11 @@
 Author's experience:
 > Want to leverage frontier models like Claude Fable 5 without skyrocketing your AI bill?
 >
-> Using our open-source **Structured Vibe Coding CLI tool and methodology**, we generated 90% of the production code for BrainFrame and VisionCapsules using Claude, Gemini, and ChatGPT.
+> Using our open-source **Structured Vibe Coding CLI tool and methodology**, we generated 90% of the production code for BrainFrame and VisionCapsules Applications using Claude, Gemini, and ChatGPT.
 >
-> Over the past 1.5 years, we’ve tackled everything from quick fixes to massive architectural tasks—all on a lean monthly budget of **$20–$200**.
+> Over the past 1.5 years, we’ve tackled everything from quick fixes to massive architectural tasks—all on a lean monthly budget of **$20–$200** per developer.
 >
-> We achieved this without relying on Codex, Cursor, or heavy autonomous agents. It’s designed for veteran software and algorithm engineers with deep experience in Python, web development, C/C++, Linux, and Git who want tight control over their LLMs and budget.
+> We achieved this without relying on Codex, Cursor, or heavy autonomous agents. Strip away the marketing, and the underlying theory is the same. Whether you call it a skill, a harness, or just good software engineering practice, it all comes down to treating AI as another software engineer. Our tool is designed for veteran software and algorithm engineers with deep experience in Python, web development, C/C++, Linux, and Git who want tight control over their LLMs and budgets.
 >
 > Open sourced here: https://github.com/aotuai/Structured_Vibe_Coding
 
@@ -116,15 +116,20 @@ This will generate a file my_app_concat.txt
 
 3. Drop the my_app_concat.txt in AI chat window along with the following prompt,
 
-> Audit the feature requests change_request_prompt.md. Stop and ask for clarification if you find any logical gaps, unhandled edge cases, contradictions, or missing data dependencies.
->
-> The Ground Truth Principle: Treat the codebase as the absolute source of truth. Markdown design files are historic intent. If they clash, the code wins.
+> Audit the feature requests in `change_request_prompt.md`. Stop and ask for clarification if you find any logical gaps, unhandled edge cases, contradictions, or missing data dependencies.
+> ### Rules of Engagement
+> **The Ground Truth Principle:** Treat the codebase as the absolute source of truth. Markdown design files represent historic intent; if they clash with the codebase, the code wins.
+> 
+> **No Code Yet:** Wait for my approval on your audit of `change_request_prompt.md` and answers to any clarifications before writing any code or architectural designs.
+> ### Update Instructions (Apply only if there are no pending clarifications)
 > If there are no pending clarifications, update `change_request_prompt.md` incorporating the following instructions:
 > 
-> - Incremental Scoping: Break the feature down into sub-features that build upon each other. Each sub-feature must be user-verifiable without depending on the next. Do not include details already implemented in the codebase.
-> - Acceptance Criteria: Define the feature requests using strict Given-When-Then format. Use strictly user-verifiable language—do not use underlying codebase or architectural terminology.
->
-> Wait for my approval on the change_request_prompt.md and answers to any clarifications before writing any code or architecture design.
+> - **Incremental Scoping:** Break the feature down into smaller, user-verifiable sub-features that build upon one another. Do not include details already implemented in the codebase.
+>    - For each proposed sub-feature, justify your choice: Is it genuinely easy to communicate, and is a wrong assumption quick to fix? If yes, keep it combined; if no, break it out.
+> - **Atomicity & Feedback Loops:** When deciding whether to break a feature down further or simply make an assumption, justify your choice using two rules:
+>    - *Cost/Token Efficiency:* Would a breakdown save time and token spend?
+>    - *Correction Ease:* Is the assumption easy to communicate and quick to fix if wrong?
+> - **Acceptance Criteria:** Define the feature requests using a strict **Given-When-Then** format. Use entirely user-verifiable language—do not refer to underlying codebase structures or architectural terminology.
 
 Note that the initial version of change_request_prompt.md can be drafted in any format by the user.
 
@@ -153,7 +158,8 @@ Feed the AI the generated `coding_prompt.md` and force it to code incrementally.
 >
 > Coding Constraints:
 > - Generate the whole file: Always output the complete file content in zip file so I can download, unzip and replace my local copy directly.
-> - Minimal changes only: Do the absolute minimum required to accomplish the task. Do not expand the scope. If you feel a broader architectural change is necessary, ask for my approval first.
+> - Minimal changes only: Do the absolute minimum required to accomplish the task. Do not expand the scope.
+> - If you feel a change_request_prompt.md change or a broader architectural change is necessary, ask for my approval first.
 > - Zero cosmetic changes: I manually review every line using diff tools. Do not reformat existing code, change indentation, merge/split lines, or modify/add/remove comments. Leave the surrounding code exactly as you found it to keep the diff clean.
 >
 > Please provide commit text along with your results.
