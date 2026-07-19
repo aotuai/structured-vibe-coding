@@ -9,7 +9,8 @@ from shared_utils import summary, write_concatenated_artifact
 # --- Configuration ---
 ALLOWED_EXTENSIONS = {
     '.py', '.tsx', '.css', '.js', '.conf', '.json', '.vue',
-    '.html', '.yml', '.yaml', '.txt', '.sh', '.md', '.ini', '.ts'
+    '.html', '.yml', '.yaml', '.txt', '.sh', '.md', '.ini', '.ts',
+    '.tf', '.hcl'
 }
 CODE_EXTENSIONS = {
     '.py', '.tsx', '.js', '.ts', '.html', '.css', '.sh', '.vue',
