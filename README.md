@@ -120,15 +120,17 @@ This will generate a file my_app_concat.txt
 > ### Rules of Engagement
 > **The Ground Truth Principle:** Treat the codebase as the absolute source of truth. Markdown design files represent historic intent; if they clash with the codebase, the code wins.
 > 
-> **No Code Yet:** Wait for my approval on your audit of `change_request_prompt.md` and answers to any clarifications before writing any code or architectural designs.
+> **No Code Yet:** Wait for my approval on your audit of `change_request_prompt.md` and answers to any clarifications before writing any code or architectural designs. When you ask questions for clarifications, please use entirely user-verifiable language—try to avoid referring to underlying codebase structures or architectural terminology.
+> 
 > ### Update Instructions (Apply only if there are no pending clarifications)
 > If there are no pending clarifications, update `change_request_prompt.md` incorporating the following instructions:
 > 
 > - **Incremental Scoping:** Break the feature down into smaller, user-verifiable sub-features that build upon one another. Do not include details already implemented in the codebase.
 >    - For each proposed sub-feature, justify your choice: Is it genuinely easy to communicate, and is a wrong assumption quick to fix? If yes, keep it combined; if no, break it out.
-> - **Atomicity & Feedback Loops:** When deciding whether to break a feature down further or simply make an assumption, justify your choice using two rules:
+> - **Atomicity & Feedback Loops:** When deciding whether to break a feature down further or simply make an assumption, justify your choice using three rules:
 >    - *Cost/Token Efficiency:* Would a breakdown save time and token spend?
 >    - *Correction Ease:* Is the assumption easy to communicate and quick to fix if wrong?
+>    - *Fewer iterations:* Does it require more iterations or fewer iterations? More iterations will cost more human time and often cost more tokens.
 > - **Acceptance Criteria:** Define the feature requests using a strict **Given-When-Then** format. Use entirely user-verifiable language—do not refer to underlying codebase structures or architectural terminology.
 
 Note that the initial version of change_request_prompt.md can be drafted in any format by the user.
